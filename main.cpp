@@ -1,38 +1,28 @@
 #include <iostream>
 #include <gmpxx.h>
+#include <chrono>
 
 using namespace std;
 
-void eea (int a, int b,
-        int& gcd, int& x, int& y) {
-        x=0, y=1; 
-        int u=1, v=0, m, n, q, r;
-        gcd = b;
-        while (a!=0) {
-                q=gcd/a; r=gcd%a;
-                m=x-u*q; n=y-v*q;
-                gcd=a; a=r; x=u; y=v; u=m; v=n;
-        }
-}
-
 mpz_class gcd(mpz_class a, mpz_class b);
-void extended_ea(mpz_class a, mpz_class b, mpz_class &gcd, mpz_class &x, mpz_class &y);
+void extended_ea(mpz_class a, mpz_class &b, mpz_class &s, mpz_class &t);
 
-//TODO: write extended_gcd
 //TODO: write fermats test
 //TODO: write miller rabin test
-int main(int argc, char *argv[])
+int main()
 {
-  int inputA, inputB, x, y, tmp;
+  mpz_class inputA, inputB, x, y;
 
   cout << "enter two natural numbers:" << endl;
   cin >> inputA;
   cin >> inputB;
   
-  eea(inputA, inputB, tmp, x, y);
-  //extended_ea(inputA, inputB, tmp, x, y);
-  cout << "x:" << x << " y: " << y  << " gcd: " << tmp << endl;
-  
+  chrono::time_point<chrono::high_resolution_clock> start2 = chrono::high_resolution_clock::now();
+  extended_ea(inputA, inputB, x, y);
+  chrono::time_point<chrono::high_resolution_clock> end2 = chrono::high_resolution_clock::now();
+  cout << "extended_ea: x: " << x << " y: " << y  << " gcd: " << inputB << " time: " <<
+    chrono::duration_cast<chrono::microseconds>(end2 - start2).count() << endl;
+ 
   return 0;
 }
 
@@ -52,27 +42,37 @@ mpz_class gcd(mpz_class a, mpz_class b)
   return a;
 }
 
-void extended_ea(mpz_class a, mpz_class b, mpz_class &gcd, mpz_class &x, mpz_class &y)
+//inductive eea method
+// b = gcd;
+// s = x;
+// t = y;
+void extended_ea(mpz_class a, mpz_class &b, mpz_class &s, mpz_class &t)
 {
-  mpz_class u, v, m, n, q, r;
-  u = 1;
-  v = 0;
-  x = 0;
-  y = 1;
+  mpz_class  q, u, v, r, tmp;
 
-  gcd = b;
-  while(a != 0){
-    //q = gcd / a; r = gcd % a;
-    //m = x - u * q; n = y - v * q;
-    //gcd = a; a = r; x = u; y = v; v = n;
-    r = gcd % a;
-    q = gcd / a;
-    n = y - v * q;
-    m = x - u * q;
-    v = n;
-    y = v;
-    x = u;
-    a = r;
-    gcd = a;
+  //initialize all the variables
+  q = 1;
+  u = 1;
+  s = 0;
+  v = 0;
+  t = 1;
+  r = 1;
+
+  while( r != 0){
+    q = a / b;
+    r = a % b;
+
+    a = b;
+    b = r;
+    
+    tmp = s;
+    s = u - q * s;
+    u = tmp;
+
+    tmp = t;
+    t = v - q * t;
+    v = tmp;
+    
+    r = a % b; //otherwise it would leave the loop too late
   }
 }
