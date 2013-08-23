@@ -123,7 +123,7 @@ bool miller_rabin_test(mpz_class prime, mpz_class rounds)
   mpz_class a, d, s = 1;
   mpz_class i = 0;
   mpz_class result = 0;
-  mpz_class j = 1;
+  mpz_class j = 0;
   mpz_class prefix = 0;
   gmp_randclass rand(gmp_randinit_default);
 
@@ -156,17 +156,18 @@ bool miller_rabin_test(mpz_class prime, mpz_class rounds)
     }while(a < 2);
     //test if a^d % prime == 1
     mpz_powm(result.get_mpz_t(), a.get_mpz_t(), d.get_mpz_t(), prime.get_mpz_t());
+    cout << "result: " << result << " result - prime: " << result - prime << endl;
     if( (result == 1) || ((result - prime) == -1) ){
       continue;
     }
     //test r from 0 to s - 1 if a^((2^r) * d) % prime == -1
-    while( j < s ){
+    while( j <= s ){
       mpz_pow_ui(prefix.get_mpz_t(), mpz_class(2).get_mpz_t(), j.get_ui());
       prefix *= d;
       mpz_powm(result.get_mpz_t(), a.get_mpz_t(), prefix.get_mpz_t(), prime.get_mpz_t());
       if( (result == -1) || ((result - prime) == -1) ) {
         break;
-      }else if( j == (s - 1)){
+      }else if( j >= (s - 1)){
         return false;
       }
       j++;
