@@ -132,23 +132,19 @@ bool miller_rabin_test(mpz_class prime, mpz_class rounds)
     return false;
   }
   
-  cout << "miller_rabin_test: prime = " << prime << endl;
   //calculate s
   while( ((prime - 1) % s) == 0){
     i++;
     mpz_pow_ui(s.get_mpz_t(), mpz_class(2).get_mpz_t(), i.get_ui());
   }
   s = i - 1;
-  cout << "miller_rabin_test: s = " << s << endl;
   
   //calculate d
   mpz_pow_ui(d.get_mpz_t(), mpz_class(2).get_mpz_t(), s.get_ui());
   d = (prime - 1) / d;
-  cout << "miller_rabin_test: d = " << d << endl;
 
   //use the miller rabin test for x rounds
   for(mpz_class i = 0; i < rounds; i++){
-    cout << "miller_rabin_test: round = " << i << endl;
     //generate random number
     //use chrono time since epoch to generate the seed
     mpz_class seed = chrono::high_resolution_clock::now().time_since_epoch().count();
@@ -158,10 +154,8 @@ bool miller_rabin_test(mpz_class prime, mpz_class rounds)
       a = rand.get_z_range(prime);
       //check if this a was already used
     }while(a < 2);
-    cout << "miller_rabin_test: a = " << a << endl;
     //test if a^d % prime == 1
     mpz_powm(result.get_mpz_t(), a.get_mpz_t(), d.get_mpz_t(), prime.get_mpz_t());
-    cout << "miller_rabin_test: a^d mod prime: " << result << endl;
     if( (result == 1) || ((result - prime) == -1) ){
       continue;
     }
@@ -170,43 +164,43 @@ bool miller_rabin_test(mpz_class prime, mpz_class rounds)
       mpz_pow_ui(prefix.get_mpz_t(), mpz_class(2).get_mpz_t(), j.get_ui());
       prefix *= d;
       mpz_powm(result.get_mpz_t(), a.get_mpz_t(), prefix.get_mpz_t(), prime.get_mpz_t());
-      cout << "miller_rabin_test: " << a << "^" << prefix << " % " << prime << " == " << result << endl;
       if( (result == -1) || ((result - prime) == -1) ) {
-        cout << "miller_rabin_test: you passed" << endl;
         break;
       }else if( j == (s - 1)){
-        cout << "miller_rabin_test: you failed" << endl;
         return false;
       }
       j++;
     } 
   }
   
-  cout << "miller_rabin_test: you passed" << endl;
   return true;
 }
 
-//TODO:dont count upwards use random numbers
 //a^(n-1) mod n == 1
 bool fermat_test(mpz_class prime, mpz_class rounds)
 {
   //needed otherwise we would lose the value of prime
   mpz_class exp = prime - 1;
-  mpz_class result;
+  mpz_class result, a;
+  gmp_randclass rand(gmp_randinit_default);
   
   //test if too small
   if(prime <= 0){
     return false;
   }
 
-  if(rounds > prime){
-    rounds = prime;
-  }
-
   for(mpz_class i = 1; i < rounds; i++){
-    cout << "i: " << i << endl;
-    mpz_powm(result.get_mpz_t(), i.get_mpz_t(), exp.get_mpz_t(), prime.get_mpz_t());
-    cout << "result: " << result << endl;
+    //generate random number
+    //use chrono time since epoch to generate the seed
+    mpz_class seed = chrono::high_resolution_clock::now().time_since_epoch().count();
+    rand.seed(seed);
+    // a is only allowed from 1 to n but rand.get_z_range outputs numbers from 0 to n-1
+    do{
+      a = rand.get_z_range(prime);
+      //check if this a was already used
+    }while(a < 1);
+
+    mpz_powm(result.get_mpz_t(), a.get_mpz_t(), exp.get_mpz_t(), prime.get_mpz_t());
     if(result != 1){
       return false;
     }
