@@ -2,13 +2,15 @@
 #include <gmpxx.h>
 #include <gmp.h>
 #include <chrono>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
 mpz_class gcd(mpz_class a, mpz_class b);
 void extended_ea(mpz_class a, mpz_class &b, mpz_class &s, mpz_class &t);
-bool miller_rabin_test(mpz_class prime, unsigned int rounds);
-bool fermat_test(mpz_class prime);
+bool miller_rabin_test(mpz_class prime, mpz_class rounds);
+bool fermat_test(mpz_class prime, mpz_class rounds);
 
 int main()
 {
@@ -27,7 +29,8 @@ int main()
 
   cout << "fermat_test: enter a number" << endl;
   cin >> inA;
-  if(fermat_test(inA)){
+  cin >> inB;
+  if(fermat_test(inA, inB.get_ui())){
     cout << "fermat_test returned true" << endl;
   }else{
     cout << "fermat_test returned false" << endl;
@@ -97,7 +100,7 @@ void extended_ea(mpz_class a, mpz_class &b, mpz_class &s, mpz_class &t)
     q = a / b;
     r = a % b;
     
-    //check if already reached the end of the eea
+    //check if we already reached the end of the eea
     if(r == 0){
       break;
     }
@@ -115,18 +118,16 @@ void extended_ea(mpz_class a, mpz_class &b, mpz_class &s, mpz_class &t)
   }
 }
 
-//FIXME: sometimes a is still the same number over and over again -> vary seed and generation
-bool miller_rabin_test(mpz_class prime, unsigned int rounds)
+bool miller_rabin_test(mpz_class prime, mpz_class rounds)
 {
-  mpz_class a, d, s = 1; //will be needed later
+  mpz_class a, d, s = 1;
   mpz_class i = 0;
-  mpz_class randMax = prime - 1;
   mpz_class result = 0;
   mpz_class j = 1;
   mpz_class prefix = 0;
-  gmp_randclass rr(gmp_randinit_default);
+  gmp_randclass rand(gmp_randinit_default);
 
-  //test if uneven or too small
+  //test if even or too small
   if( ((prime % 2) == 0) || (prime <= 2) || (rounds <= 0) ){
     return false;
   }
@@ -146,11 +147,17 @@ bool miller_rabin_test(mpz_class prime, unsigned int rounds)
   cout << "miller_rabin_test: d = " << d << endl;
 
   //use the miller rabin test for x rounds
-  for(unsigned int i = 0; i < rounds; i++){
+  for(mpz_class i = 0; i < rounds; i++){
     cout << "miller_rabin_test: round = " << i << endl;
     //generate random number
-    rr.seed(time(NULL));
-    a = rr.get_z_range(randMax);
+    //use chrono time since epoch to generate the seed
+    mpz_class seed = chrono::high_resolution_clock::now().time_since_epoch().count();
+    rand.seed(seed);
+    // a is only allowed from 2 to n-1 but rand.get_z_range outputs numbers from 0 to n-1
+    do{
+      a = rand.get_z_range(prime);
+      //check if this a was already used
+    }while(a < 2);
     cout << "miller_rabin_test: a = " << a << endl;
     //test if a^d % prime == 1
     mpz_powm(result.get_mpz_t(), a.get_mpz_t(), d.get_mpz_t(), prime.get_mpz_t());
@@ -179,10 +186,9 @@ bool miller_rabin_test(mpz_class prime, unsigned int rounds)
   return true;
 }
 
-//TODO:add max number for testing
 //TODO:dont count upwards use random numbers
-//a^(n-1) -1 mod n == 0
-bool fermat_test(mpz_class prime)
+//a^(n-1) mod n == 1
+bool fermat_test(mpz_class prime, mpz_class rounds)
 {
   //needed otherwise we would lose the value of prime
   mpz_class exp = prime - 1;
@@ -193,7 +199,11 @@ bool fermat_test(mpz_class prime)
     return false;
   }
 
-  for( mpz_class i = 1; i < prime; i++){
+  if(rounds > prime){
+    rounds = prime;
+  }
+
+  for(mpz_class i = 1; i < rounds; i++){
     cout << "i: " << i << endl;
     mpz_powm(result.get_mpz_t(), i.get_mpz_t(), exp.get_mpz_t(), prime.get_mpz_t());
     cout << "result: " << result << endl;
