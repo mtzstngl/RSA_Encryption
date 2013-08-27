@@ -2,8 +2,6 @@
 #include <gmpxx.h>
 #include <gmp.h>
 #include <chrono>
-#include <vector>
-#include <algorithm>
 
 using namespace std;
 
@@ -14,36 +12,121 @@ bool fermat_test(mpz_class prime, mpz_class rounds);
 
 int main()
 {
-  mpz_class inA, inB, x, y;
+/*
+ *  gmp_randclass randClass(gmp_randinit_default);
+ *
+ *  for(mpz_class i = 0; i < 1000000000; i+= 10000){
+ *    randClass.seed(mpz_class(chrono::high_resolution_clock::now().time_since_epoch().count()));
+ *    mpf_class f(0, 4096);
+ *    f = randClass.get_f();
+ *    f *= 10000000000 * i;
+ *    f += 200000000000 * i;
+ *    cout << f << endl;
+ *    mpz_class integer;
+ *    mpz_set_f(integer.get_mpz_t(), f.get_mpf_t());
+ *    cout << integer << endl;
+ *  }
+ */
+
+  mpz_class p, q, m, N, e, d, s;
+  mpz_class block_size, multipl;
+  mpf_class f;
+  gmp_randclass randClass(gmp_randinit_default);
+  string text;
+  size_t digits;
+
+  cout << "RSA - Encryption test" << endl;
+  cout << "Enter the block size for encryption" << endl;
+  cin >> block_size;
+  cout << "Now enter the text you would like to encrypt" << endl;
+  cin >> text;
+
+  digits = mpz_sizeinbase(block_size.get_mpz_t(), 10);
+  //generate p
+  randClass.seed(mpz_class(chrono::high_resolution_clock::now().time_since_epoch().count()));
+  f = randClass.get_f();
+  mpz_ui_pow_ui(multipl.get_mpz_t(), 10, digits - 1);
+  f *= multipl;
+  f += 10 * multipl;
+  mpz_set_f(p.get_mpz_t(), f.get_mpf_t());
   
-  cout << "gcd: enter two numbers" << endl;
-  cin >> inA;
-  cin >> inB;
-  cout << "gcd returned: " << gcd(inA, inB) << endl;
+  cout << "digits: " << digits << " 1 * multipl: " << 1 * multipl << " 10 * multipl: " << 10 * multipl << endl; 
+  cout << "f: " << f << " p before: " << p << endl;
 
-  cout << "extended_ea: enter two numbers" << endl;
-  cin >> inA;
-  cin >> inB;
-  extended_ea(inA, inB, x, y);
-  cout << "extended_ea returned: inB = " << inB << " x = " << x << " y = " << y << endl;
-
-  cout << "fermat_test: enter a number" << endl;
-  cin >> inA;
-  cin >> inB;
-  if(fermat_test(inA, inB.get_ui())){
-    cout << "fermat_test returned true" << endl;
-  }else{
-    cout << "fermat_test returned false" << endl;
+  if( (!fermat_test(p, 200)) || (!miller_rabin_test(p, 200)) ){
+    while( (!fermat_test(p, 200)) || (!miller_rabin_test(p, 200)) ){
+      p++;
+    }
   }
 
-  cout << "miller_rabin_test: enter two numbers" << endl;
-  cin >> inA;
-  cin >> inB;
-  if(miller_rabin_test(inA, inB.get_ui())){
-    cout << "miller_rabin_test returned true" << endl;
-  }else{
-    cout << "miller_rabin_test returned false" << endl;
+  //generate q
+  q = p + 1;
+  if( (!fermat_test(q, 200)) || (!miller_rabin_test(q, 200)) ){
+    while( (!fermat_test(q, 200)) || (!miller_rabin_test(q, 200)) ){
+      q++;
+    }
   }
+  cout << "p after: " << p << " q after: " << q << endl;
+
+  N = p * q;
+  cout << "N: " << N << endl;
+
+  m = (p - 1) * (q - 1);
+  cout << "m: " << m << endl;
+
+  randClass.seed(chrono::high_resolution_clock::now().time_since_epoch().count());
+  do{
+    e = randClass.get_z_range(m);
+  }while( (e <= 1) || (gcd(e, m) != 1) );
+  cout << "e: " << e << endl;
+
+  mpz_class tmp = m;
+  extended_ea(e, tmp, s, d);
+  if(d <= 0){
+    d = d + m;
+  }
+  cout << "e: " << e << " tmp: " << tmp << " s: " << s << " d: " << d << " m: " << m << endl;
+  cout << "(e * d) % m = " << (e * d) % m << endl;
+
+  for(mpz_class i = 0; i < text.length(); i++){
+    mpz_class enc, dec;
+    int ascii = static_cast<int>(text.at(i.get_ui()));
+    mpz_powm(enc.get_mpz_t(), mpz_class(ascii).get_mpz_t(), e.get_mpz_t(), N.get_mpz_t());
+    mpz_powm(dec.get_mpz_t(), enc.get_mpz_t(), d.get_mpz_t(), N.get_mpz_t());
+    cout << "plain: " << ascii << " enc: " << enc << " dec: " << dec << endl;
+  }
+/*
+ *  mpz_class inA, inB, x, y;
+ *  
+ *  cout << "gcd: enter two numbers" << endl;
+ *  cin >> inA;
+ *  cin >> inB;
+ *  cout << "gcd returned: " << gcd(inA, inB) << endl;
+ *
+ *  cout << "extended_ea: enter two numbers" << endl;
+ *  cin >> inA;
+ *  cin >> inB;
+ *  extended_ea(inA, inB, x, y);
+ *  cout << "extended_ea returned: inB = " << inB << " x = " << x << " y = " << y << endl;
+ *
+ *  cout << "fermat_test: enter a number" << endl;
+ *  cin >> inA;
+ *  cin >> inB;
+ *  if(fermat_test(inA, inB.get_ui())){
+ *    cout << "fermat_test returned true" << endl;
+ *  }else{
+ *    cout << "fermat_test returned false" << endl;
+ *  }
+ *
+ *  cout << "miller_rabin_test: enter two numbers" << endl;
+ *  cin >> inA;
+ *  cin >> inB;
+ *  if(miller_rabin_test(inA, inB.get_ui())){
+ *    cout << "miller_rabin_test returned true" << endl;
+ *  }else{
+ *    cout << "miller_rabin_test returned false" << endl;
+ *  }
+ */
 
   return 0;
 }
@@ -156,7 +239,6 @@ bool miller_rabin_test(mpz_class prime, mpz_class rounds)
     }while(a < 2);
     //test if a^d % prime == 1
     mpz_powm(result.get_mpz_t(), a.get_mpz_t(), d.get_mpz_t(), prime.get_mpz_t());
-    cout << "result: " << result << " result - prime: " << result - prime << endl;
     if( (result == 1) || ((result - prime) == -1) ){
       continue;
     }
