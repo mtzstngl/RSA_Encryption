@@ -29,11 +29,9 @@ int main()
  */
 
   mpz_class p, q, m, N, e, d, s;
-  mpz_class block_size, multipl;
-  mpf_class f;
+  mpz_class block_size;
   gmp_randclass randClass(gmp_randinit_default);
   string text;
-  size_t digits;
 
   cout << "RSA - Encryption test" << endl;
   cout << "Enter the block size for encryption" << endl;
@@ -41,17 +39,12 @@ int main()
   cout << "Now enter the text you would like to encrypt" << endl;
   cin >> text;
 
-  digits = mpz_sizeinbase(block_size.get_mpz_t(), 10);
+  block_size/2; //size a prime
+
   //generate p
   randClass.seed(mpz_class(chrono::high_resolution_clock::now().time_since_epoch().count()));
-  f = randClass.get_f();
-  mpz_ui_pow_ui(multipl.get_mpz_t(), 10, digits - 1);
-  f *= multipl;
-  f += 10 * multipl;
-  mpz_set_f(p.get_mpz_t(), f.get_mpf_t());
-  
-  cout << "digits: " << digits << " 1 * multipl: " << 1 * multipl << " 10 * multipl: " << 10 * multipl << endl; 
-  cout << "f: " << f << " p before: " << p << endl;
+  p = randClass.get_z_bits(block_size);
+  cout << "p before: " << p << endl;
 
   if( (!fermat_test(p, 200)) || (!miller_rabin_test(p, 200)) ){
     while( (!fermat_test(p, 200)) || (!miller_rabin_test(p, 200)) ){
@@ -60,13 +53,13 @@ int main()
   }
 
   //generate q
-  q = p + 1;
-  if( (!fermat_test(q, 200)) || (!miller_rabin_test(q, 200)) ){
-    while( (!fermat_test(q, 200)) || (!miller_rabin_test(q, 200)) ){
+  q = randClass.get_z_bits(block_size);
+  if( ((!fermat_test(q, 200)) || (!miller_rabin_test(q, 200))) /*|| (q == p) */){
+    while( ((!fermat_test(q, 200)) || (!miller_rabin_test(q, 200))) /*|| (q == p)*/ ){
       q++;
     }
   }
-  cout << "p after: " << p << " q after: " << q << endl;
+  cout << " p after: " << p << endl << " q after: " << q << endl;
 
   N = p * q;
   cout << "N: " << N << endl;
@@ -85,7 +78,7 @@ int main()
   if(d <= 0){
     d = d + m;
   }
-  cout << "e: " << e << " tmp: " << tmp << " s: " << s << " d: " << d << " m: " << m << endl;
+  cout << " d: " << d << endl << " m: " << m << endl;
   cout << "(e * d) % m = " << (e * d) % m << endl;
 
   for(mpz_class i = 0; i < text.length(); i++){
@@ -93,7 +86,9 @@ int main()
     int ascii = static_cast<int>(text.at(i.get_ui()));
     mpz_powm(enc.get_mpz_t(), mpz_class(ascii).get_mpz_t(), e.get_mpz_t(), N.get_mpz_t());
     mpz_powm(dec.get_mpz_t(), enc.get_mpz_t(), d.get_mpz_t(), N.get_mpz_t());
-    cout << "plain: " << ascii << " enc: " << enc << " dec: " << dec << endl;
+    cout << "plain: " << ascii << endl;
+    cout << " enc: " << enc << endl;
+    cout << " dec: " << dec << endl;
   }
 /*
  *  mpz_class inA, inB, x, y;
