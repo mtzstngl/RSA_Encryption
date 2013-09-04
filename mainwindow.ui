@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>879</width>
+    <height>737</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="generation_groupBox">
+      <property name="title">
+       <string>Generation - Input</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QHBoxLayout" name="selection_horizontalLayout">
+           <item>
+            <widget class="QLabel" name="selection_label">
+             <property name="text">
+              <string>Select strength</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="selection_comboBox">
+             <item>
+              <property name="text">
+               <string>128</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>256</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>512</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1024</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2048</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>4096</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="generate_button">
+           <property name="text">
+            <string>Generate</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="q_verticalLayout">
+           <item>
+            <widget class="QLabel" name="q_label">
+             <property name="text">
+              <string>q:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTextEdit" name="q_textedit"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="p_verticalLayout">
+           <item>
+            <widget class="QLabel" name="p_label">
+             <property name="text">
+              <string>p:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTextEdit" name="p_textedit"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="n_verticalLayout">
+           <item>
+            <widget class="QLabel" name="n_label">
+             <property name="text">
+              <string>N:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTextEdit" name="n_textedit"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="e_verticalLayout">
+           <item>
+            <widget class="QLabel" name="e_label">
+             <property name="text">
+              <string>e:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTextEdit" name="e_textedit"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="d_verticalLayout">
+           <item>
+            <widget class="QLabel" name="d_label">
+             <property name="text">
+              <string>d:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTextEdit" name="d_textedit"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="encDec_groupBox">
+      <property name="title">
+       <string>Encryption - Decryption</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="encDecBox_verticalLayout">
+         <item>
+          <layout class="QHBoxLayout" name="method_horizontalLayout">
+           <item>
+            <widget class="QLabel" name="method_label">
+             <property name="text">
+              <string>Choose encryption method</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="method_comboBox">
+             <item>
+              <property name="text">
+               <string>RSA</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>RSAES-OAEP</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>RSAES-PKCS1-V1_5</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="selectEnc_horizontalLayout">
+           <item>
+            <widget class="QComboBox" name="selectEnc_comboBox">
+             <item>
+              <property name="text">
+               <string>Encrypt</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Decrypt</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="start_button">
+             <property name="text">
+              <string>Start</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="input_verticalLayout">
+           <item>
+            <widget class="QLabel" name="input_label">
+             <property name="text">
+              <string>Plain Text</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTextEdit" name="input_textedit"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="output_verticalLayout">
+           <item>
+            <widget class="QLabel" name="output_label">
+             <property name="text">
+              <string>Encrypted</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTextEdit" name="output_textedit"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

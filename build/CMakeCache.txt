@@ -164,6 +164,15 @@ GMP_INCLUDE_DIR:PATH=/usr/include
 //Path to a library.
 GMP_LIBRARIES:FILEPATH=/usr/lib64/libgmp.so
 
+//The directory containing a CMake configuration file for Qt5Core.
+Qt5Core_DIR:PATH=/usr/lib64/cmake/Qt5Core
+
+//The directory containing a CMake configuration file for Qt5Gui.
+Qt5Gui_DIR:PATH=/usr/lib64/cmake/Qt5Gui
+
+//The directory containing a CMake configuration file for Qt5Widgets.
+Qt5Widgets_DIR:PATH=/usr/lib64/cmake/Qt5Widgets
+
 //Value Computed by CMake
 rsa_encryption_BINARY_DIR:STATIC=/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build
 

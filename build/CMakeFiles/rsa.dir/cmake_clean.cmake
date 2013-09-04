@@ -1,5 +1,10 @@
 FILE(REMOVE_RECURSE
+  "rsa_automoc.cpp"
+  "ui_mainwindow.h"
   "CMakeFiles/rsa.dir/main.cpp.o"
+  "CMakeFiles/rsa.dir/rsa.cpp.o"
+  "CMakeFiles/rsa.dir/mainwindow.cpp.o"
+  "CMakeFiles/rsa.dir/rsa_automoc.cpp.o"
   "rsa.pdb"
   "rsa"
 )

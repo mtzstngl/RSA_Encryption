@@ -59,10 +59,10 @@ CMAKE_BINARY_DIR = "/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build
 # Target rules for target CMakeFiles/rsa.dir
 
 # All Build rule for target.
-CMakeFiles/rsa.dir/all:
+CMakeFiles/rsa.dir/all: CMakeFiles/rsa_automoc.dir/all
 	$(MAKE) -f CMakeFiles/rsa.dir/build.make CMakeFiles/rsa.dir/depend
 	$(MAKE) -f CMakeFiles/rsa.dir/build.make CMakeFiles/rsa.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report "/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/CMakeFiles"  1
+	$(CMAKE_COMMAND) -E cmake_progress_report "/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/CMakeFiles"  1 2 3 4 5
 	@echo "Built target rsa"
 .PHONY : CMakeFiles/rsa.dir/all
 
@@ -72,7 +72,7 @@ all: CMakeFiles/rsa.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/rsa.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/CMakeFiles" 1
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/CMakeFiles" 6
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/rsa.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/CMakeFiles" 0
 .PHONY : CMakeFiles/rsa.dir/rule
@@ -88,6 +88,37 @@ CMakeFiles/rsa.dir/clean:
 
 # clean rule for target.
 clean: CMakeFiles/rsa.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/rsa_automoc.dir
+
+# All Build rule for target.
+CMakeFiles/rsa_automoc.dir/all:
+	$(MAKE) -f CMakeFiles/rsa_automoc.dir/build.make CMakeFiles/rsa_automoc.dir/depend
+	$(MAKE) -f CMakeFiles/rsa_automoc.dir/build.make CMakeFiles/rsa_automoc.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report "/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/CMakeFiles"  6
+	@echo "Built target rsa_automoc"
+.PHONY : CMakeFiles/rsa_automoc.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/rsa_automoc.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/CMakeFiles" 1
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/rsa_automoc.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/CMakeFiles" 0
+.PHONY : CMakeFiles/rsa_automoc.dir/rule
+
+# Convenience name for target.
+rsa_automoc: CMakeFiles/rsa_automoc.dir/rule
+.PHONY : rsa_automoc
+
+# clean rule for target.
+CMakeFiles/rsa_automoc.dir/clean:
+	$(MAKE) -f CMakeFiles/rsa_automoc.dir/build.make CMakeFiles/rsa_automoc.dir/clean
+.PHONY : CMakeFiles/rsa_automoc.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/rsa_automoc.dir/clean
 .PHONY : clean
 
 #=============================================================================

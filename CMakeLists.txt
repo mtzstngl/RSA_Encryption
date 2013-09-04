@@ -1,10 +1,9 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8.8)
 project (rsa_encryption)
 add_definitions(-std=c++11)
 
 # run cmake .. within ./build so there is no mess
 # build rsa encryption with large number support
-add_executable (rsa main.cpp)
 
 # START_FINDGMP copied from DGtal
 if (GMP_INCLUDE_DIR AND GMP_LIBRARIES)
@@ -22,6 +21,17 @@ FIND_PACKAGE_HANDLE_STANDARD_ARGS(GMP DEFAULT_MSG GMP_INCLUDE_DIR GMP_LIBRARIES)
 
 mark_as_advanced(GMP_INCLUDE_DIR GMP_LIBRARIES)
 # END_FINDGMP copied from DGtal
+
+# START_QTGUI
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_AUTOMOC ON)
+
+find_package(Qt5Widgets REQUIRED)
+QT5_WRAP_UI(UI_HEADERS mainwindow.ui)
+# END_QTGUI
+
+add_executable (rsa main.cpp rsa.cpp rsa.h mainwindow.cpp mainwindow.h ${UI_HEADERS})
+qt5_use_modules(rsa Widgets)
 
 # In case I need more libraries
 set (all_libs ${GMP_LIBRARIES} ${GMPXX_LIBRARIES})
