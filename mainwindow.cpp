@@ -13,7 +13,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_start_button_clicked()
 {
-
+  //TODO: encrypt text / decrypt text
 }
 
 void MainWindow::on_generate_button_clicked()
@@ -25,4 +25,15 @@ void MainWindow::on_generate_button_clicked()
   ui->n_textedit->setText(QString::fromStdString(N.get_str()));
   ui->e_textedit->setText(QString::fromStdString(e.get_str()));
   ui->d_textedit->setText(QString::fromStdString(d.get_str()));
+}
+
+void MainWindow::on_selectEnc_comboBox_currentTextChanged(const QString &text)
+{
+  if(text == "Encrypt"){
+    ui->input_label->setText(QString("Plain Text"));
+    ui->output_label->setText(QString("Encrypted"));
+  }else if(text == "Decrypt"){
+    ui->input_label->setText(QString("Encrypted"));
+    ui->output_label->setText(QString("Plain Text"));
+  }
 }

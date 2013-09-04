@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[4];
-    char stringdata[64];
+    QByteArrayData data[6];
+    char stringdata[110];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,10 +32,14 @@ static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
 QT_MOC_LITERAL(0, 0, 10),
 QT_MOC_LITERAL(1, 11, 23),
 QT_MOC_LITERAL(2, 35, 0),
-QT_MOC_LITERAL(3, 36, 26)
+QT_MOC_LITERAL(3, 36, 26),
+QT_MOC_LITERAL(4, 63, 40),
+QT_MOC_LITERAL(5, 104, 4)
     },
     "MainWindow\0on_start_button_clicked\0\0"
     "on_generate_button_clicked\0"
+    "on_selectEnc_comboBox_currentTextChanged\0"
+    "text\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -45,7 +49,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -53,12 +57,14 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   24,    2, 0x08,
-       3,    0,   25,    2, 0x08,
+       1,    0,   29,    2, 0x08,
+       3,    0,   30,    2, 0x08,
+       4,    1,   31,    2, 0x08,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    5,
 
        0        // eod
 };
@@ -70,10 +76,10 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->on_start_button_clicked(); break;
         case 1: _t->on_generate_button_clicked(); break;
+        case 2: _t->on_selectEnc_comboBox_currentTextChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -101,13 +107,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 3)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

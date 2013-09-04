@@ -1,5 +1,23 @@
 #include "rsa.h"
 
+string rsa_dec(string encrypted)
+{
+  string plainText;
+
+  plainText = encrypted;//TODO remove me
+  
+  return plainText;
+}
+
+string rsa_enc(string plainText)
+{
+  string encrypted;
+
+  encrypted = plainText;//TODO remove me
+
+  return encrypted;
+}
+
 void genrsa(mpz_class block_size, mpz_class &q, mpz_class &p, mpz_class &N, mpz_class &e, mpz_class &d)
 {
   //generate numbers with desired length

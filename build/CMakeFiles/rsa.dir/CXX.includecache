@@ -6,42 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/../mainwindow.h
-QMainWindow
--
-iostream
--
-rsa.h
-/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/../rsa.h
-
-/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/../rsa.h
-iostream
--
-chrono
--
-gmpxx.h
--
-gmp.h
--
-
-/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/moc_mainwindow.cpp
-../mainwindow.h
-/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/../mainwindow.h
-QtCore/qbytearray.h
--
-QtCore/qmetatype.h
--
-
-/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/rsa_automoc.cpp
-moc_mainwindow.cpp
-/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build/moc_mainwindow.cpp
-
-/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/main.cpp
-mainwindow.h
-/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/mainwindow.h
-QApplication
--
-
 /home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/mainwindow.cpp
 mainwindow.h
 /home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/mainwindow.h
@@ -53,10 +17,6 @@ QMainWindow
 -
 iostream
 -
-rsa.h
-/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/rsa.h
-
-/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/rsa.cpp
 rsa.h
 /home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/rsa.h
 

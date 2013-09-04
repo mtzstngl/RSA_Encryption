@@ -20,6 +20,7 @@ public:
 private slots:
   void on_start_button_clicked();
   void on_generate_button_clicked();
+  void on_selectEnc_comboBox_currentTextChanged(const QString &text);
 
 private:
   Ui::MainWindow *ui;
