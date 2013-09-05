@@ -2,6 +2,9 @@ cmake_minimum_required (VERSION 2.8.8)
 project (rsa_encryption)
 add_definitions(-std=c++11)
 
+# make Makefile with verbose output
+set(CMAKE_VERBOSE_MAKEFILE OFF)
+
 # run cmake .. within ./build so there is no mess
 # build rsa encryption with large number support
 

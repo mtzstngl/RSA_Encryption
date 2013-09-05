@@ -27,6 +27,23 @@ flags = [
 # For a C project, you would set this to 'c' instead of 'c++'.
 '-x',
 'c++',
+# Build specifications for the Qt5 GUI
+'-lQt5Gui',
+'-lQt5Core',
+'-lQt5Widgets',
+'-DQT_CORE_LIB',
+'-DQT_GUI_LIB',
+'-DQT_WIDGETS_LIB',
+'-fPIE',
+'-I/usr/include/qt',
+'-I/usr/include/qt/QtWidgets',
+'-I/usr/include/qt/QtGui',
+'-I/usr/include/qt/QtCore',
+'-I/usr/lib/qt/mkspecs/linux-clang',
+# Project specific includes
+'-I/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption/build',
+'-I/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption',
+# gmplib for big numbers
 '-lgmp',
 '-lgmpxx'
 ]
