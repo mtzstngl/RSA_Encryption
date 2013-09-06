@@ -1,21 +1,61 @@
 #include "rsa.h"
 
-string rsa_dec(string encrypted)
-{
-  string plainText;
-
-  plainText = encrypted;//TODO remove me
-  
-  return plainText;
-}
-
-string rsa_enc(string plainText)
+//TODO: maybe add option to encrypt more than on letter
+string rsa_enc(string plainText, string eStr, string NStr)
 {
   string encrypted;
+  int asciiNum;
+  mpz_class e, N, enc;
+  
+  if( (!std::all_of(eStr.begin(), eStr.end(), ::isdigit)) || (eStr == "") ){
+    return "e is not a number";
+  }
+  if( (!std::all_of(NStr.begin(), NStr.end(), ::isdigit)) || (NStr == "") ){
+    return "N is not a number";
+  }
 
-  encrypted = plainText;//TODO remove me
+  e.set_str(eStr, 10);
+  N.set_str(NStr, 10);
+  
+  for(char asciiChar : plainText){
+    asciiNum = asciiChar;
+    mpz_powm(enc.get_mpz_t(), mpz_class(asciiNum).get_mpz_t(), e.get_mpz_t(), N.get_mpz_t());
+    encrypted += enc.get_str() + " ";
+  }
 
   return encrypted;
+}
+
+//TODO: maybe add option to encrypt more than on letter
+string rsa_dec(string encrypted, string dStr, string NStr)
+{
+  string plainText;
+  mpz_class d, N, dec, enc;
+
+  if( (!std::all_of(dStr.begin(), dStr.end(), ::isdigit)) || (dStr == "") ){
+    return "d is not a number";
+  }
+  if( (!std::all_of(NStr.begin(), NStr.end(), ::isdigit)) || (NStr == "") ){
+    return "N is not a number";
+  }
+
+  d.set_str(dStr, 10);
+  N.set_str(NStr, 10);
+
+  while(encrypted.find_first_not_of(" ") != string::npos){
+    size_t pos, pos2;
+
+    pos = encrypted.find_first_not_of(" ");
+    pos2 = encrypted.find_first_of(" ", pos);
+    
+    enc.set_str(encrypted.substr(pos, pos2), 10);
+    encrypted.erase(pos, pos2);
+    
+    mpz_powm(dec.get_mpz_t(), enc.get_mpz_t(), d.get_mpz_t(), N.get_mpz_t());
+    plainText += static_cast<char>(dec.get_ui());
+  }
+  
+  return plainText;
 }
 
 void genrsa(mpz_class block_size, mpz_class &q, mpz_class &p, mpz_class &N, mpz_class &e, mpz_class &d)
