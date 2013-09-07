@@ -1,6 +1,5 @@
 #include "rsa.h"
 
-//TODO: maybe add option to encrypt more than on letter
 string rsa_enc(string plainText, string eStr, string NStr)
 {
   string encrypted;
@@ -17,16 +16,30 @@ string rsa_enc(string plainText, string eStr, string NStr)
   e.set_str(eStr, 10);
   N.set_str(NStr, 10);
   
+  string tmp;
   for(char asciiChar : plainText){
     asciiNum = asciiChar;
-    mpz_powm(enc.get_mpz_t(), mpz_class(asciiNum).get_mpz_t(), e.get_mpz_t(), N.get_mpz_t());
-    encrypted += enc.get_str() + " ";
+    if(asciiNum < 10){
+      tmp += "00" + std::to_string(asciiNum);
+    }else if(asciiNum < 100){
+      tmp += "0" + std::to_string(asciiNum);
+    }else{
+      tmp += std::to_string(asciiNum);
+    }
+  }
+  
+  mpz_class plain;
+  plain.set_str(tmp, 10);
+  if(plain < N){
+    mpz_powm(enc.get_mpz_t(), plain.get_mpz_t(), e.get_mpz_t(), N.get_mpz_t());
+    encrypted = enc.get_str();
+  }else{
+    encrypted = "plainText too big";
   }
 
   return encrypted;
 }
 
-//TODO: maybe add option to encrypt more than on letter
 string rsa_dec(string encrypted, string dStr, string NStr)
 {
   string plainText;
@@ -42,19 +55,26 @@ string rsa_dec(string encrypted, string dStr, string NStr)
   d.set_str(dStr, 10);
   N.set_str(NStr, 10);
 
-  while(encrypted.find_first_not_of(" ") != string::npos){
-    size_t pos, pos2;
 
-    pos = encrypted.find_first_not_of(" ");
-    pos2 = encrypted.find_first_of(" ", pos);
-    
-    enc.set_str(encrypted.substr(pos, pos2), 10);
-    encrypted.erase(pos, pos2);
-    
-    mpz_powm(dec.get_mpz_t(), enc.get_mpz_t(), d.get_mpz_t(), N.get_mpz_t());
-    plainText += static_cast<char>(dec.get_ui());
+  enc.set_str(encrypted, 10);
+  mpz_powm(dec.get_mpz_t(), enc.get_mpz_t(), d.get_mpz_t(), N.get_mpz_t());
+
+  encrypted = dec.get_str();
+  string sub;
+
+  while(encrypted.length() > 0){
+    if(encrypted.length() >= 3){
+      sub = encrypted.substr(encrypted.length() - 3, encrypted.length());
+      encrypted.erase(encrypted.length() - 3, encrypted.length());
+    }else{
+      sub = encrypted.substr(encrypted.length() - encrypted.length(), encrypted.length());
+      encrypted.erase(encrypted.length() - encrypted.length(), encrypted.length());
+    }
+    plainText += static_cast<char>(std::stoi(sub));
   }
   
+  std::reverse(plainText.begin(), plainText.end());
+
   return plainText;
 }
 
