@@ -176,6 +176,11 @@
              </item>
              <item>
               <property name="text">
+               <string>RSA (complete)</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string>RSAES-OAEP</string>
               </property>
              </item>

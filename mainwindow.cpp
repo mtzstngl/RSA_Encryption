@@ -23,14 +23,20 @@ void MainWindow::on_start_button_clicked()
                          ui->n_textedit->toPlainText().toStdString());
         ui->output_textedit->setText(QString::fromStdString(output));
         break;
-      case 1: //RSAES-OAEP
+      case 1: //RSA (complete)
+        output = rsa_enc_complete(ui->input_textedit->toPlainText().toStdString(),
+                         ui->e_textedit->toPlainText().toStdString(),
+                         ui->n_textedit->toPlainText().toStdString());
+        ui->output_textedit->setText(QString::fromStdString(output));
+        break;
+      case 2: //RSAES-OAEP
         //TODO: implement me
         break;
-      case 2: //RSAES-PKCS1-V1_5
+      case 3: //RSAES-PKCS1-V1_5
         //TODO: implement me
         break;
       default:
-        ui->input_textedit->setText("You shouldn'T be able to select this!!");
+        ui->input_textedit->setText("You shouldn't be able to select this!!");
         break;
     }
   }else{ //decrypt
@@ -41,14 +47,20 @@ void MainWindow::on_start_button_clicked()
                          ui->n_textedit->toPlainText().toStdString());
         ui->output_textedit->setText(QString::fromStdString(output));
         break;
-      case 1: //RSAES-OAEP
+      case 1: //RSA (complete)
+        output = rsa_dec_complete(ui->input_textedit->toPlainText().toStdString(),
+                         ui->d_textedit->toPlainText().toStdString(),
+                         ui->n_textedit->toPlainText().toStdString());
+        ui->output_textedit->setText(QString::fromStdString(output));
+        break;
+      case 2: //RSAES-OAEP
         //TODO: implement me
         break;
-      case 2: //RSAES-PKCS1-V1_5
+      case 3: //RSAES-PKCS1-V1_5
         //TODO: implement me
         break;
       default:
-        ui->input_textedit->setText("You shouldn'T be able to select this!!");
+        ui->input_textedit->setText("You shouldn't be able to select this!!");
         break;
     }
   }

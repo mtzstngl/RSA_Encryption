@@ -1,10 +1,11 @@
 #include "rsa.h"
 
-string rsa_enc(string plainText, string eStr, string NStr)
+string rsa_enc_complete(string plainText, string eStr, string NStr)
 {
-  string encrypted;
+  string encrypted, tmp;
   int asciiNum;
   mpz_class e, N, enc;
+  mpz_class plain;
   
   if( (!std::all_of(eStr.begin(), eStr.end(), ::isdigit)) || (eStr == "") ){
     return "e is not a number";
@@ -16,7 +17,6 @@ string rsa_enc(string plainText, string eStr, string NStr)
   e.set_str(eStr, 10);
   N.set_str(NStr, 10);
   
-  string tmp;
   for(char asciiChar : plainText){
     asciiNum = asciiChar;
     if(asciiNum < 10){
@@ -28,7 +28,6 @@ string rsa_enc(string plainText, string eStr, string NStr)
     }
   }
   
-  mpz_class plain;
   plain.set_str(tmp, 10);
   if(plain < N){
     mpz_powm(enc.get_mpz_t(), plain.get_mpz_t(), e.get_mpz_t(), N.get_mpz_t());
@@ -40,9 +39,9 @@ string rsa_enc(string plainText, string eStr, string NStr)
   return encrypted;
 }
 
-string rsa_dec(string encrypted, string dStr, string NStr)
+string rsa_dec_complete(string encrypted, string dStr, string NStr)
 {
-  string plainText;
+  string plainText, sub;
   mpz_class d, N, dec, enc;
 
   if( (!std::all_of(dStr.begin(), dStr.end(), ::isdigit)) || (dStr == "") ){
@@ -60,7 +59,6 @@ string rsa_dec(string encrypted, string dStr, string NStr)
   mpz_powm(dec.get_mpz_t(), enc.get_mpz_t(), d.get_mpz_t(), N.get_mpz_t());
 
   encrypted = dec.get_str();
-  string sub;
 
   while(encrypted.length() > 0){
     if(encrypted.length() >= 3){
@@ -76,6 +74,16 @@ string rsa_dec(string encrypted, string dStr, string NStr)
   std::reverse(plainText.begin(), plainText.end());
 
   return plainText;
+}
+
+string rsa_enc(string plainText, string eStr, string NStr)
+{
+
+}
+
+string rsa_dec(string encrypted, string dStr, string NStr)
+{
+
 }
 
 void genrsa(mpz_class block_size, mpz_class &q, mpz_class &p, mpz_class &N, mpz_class &e, mpz_class &d)
@@ -119,39 +127,21 @@ void genrsa(mpz_class block_size, mpz_class &q, mpz_class &p, mpz_class &N, mpz_
       q++;
     }
   }
-  cout << " p: " << p << endl << " q: " << q << endl;
 
   N = p * q;
-  cout << "N: " << N << endl;
 
   m = (p - 1) * (q - 1);
-  cout << "m: " << m << endl;
 
   randClass.seed(chrono::high_resolution_clock::now().time_since_epoch().count());
   do{
     e = randClass.get_z_range(m);
   }while( (e <= 1) || (gcd(e, m) != 1) );
-  cout << "e: " << e << endl;
 
   mpz_class tmp = m;
   extended_ea(e, tmp, s, d);
   if(d <= 0){
     d = d + m;
   }
-  cout << " d: " << d << endl << " m: " << m << endl;
-
-  //encrypting and decrypting of text
-  /*
-   *for(mpz_class i = 0; i < text.length(); i++){
-   *  mpz_class enc, dec;
-   *  int ascii = static_cast<int>(text.at(i.get_ui()));
-   *  mpz_powm(enc.get_mpz_t(), mpz_class(ascii).get_mpz_t(), e.get_mpz_t(), N.get_mpz_t());
-   *  mpz_powm(dec.get_mpz_t(), enc.get_mpz_t(), d.get_mpz_t(), N.get_mpz_t());
-   *  cout << "plain: " << ascii << endl;
-   *  cout << " enc: " << enc << endl;
-   *  cout << " dec: " << dec << endl;
-   *}
-   */
 }
 
 //gcd using gmplib for big numbers
