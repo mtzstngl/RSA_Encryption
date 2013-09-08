@@ -23,8 +23,8 @@ void MainWindow::on_start_button_clicked()
                          ui->n_textedit->toPlainText().toStdString());
         ui->output_textedit->setText(QString::fromStdString(output));
         break;
-      case 1: //RSA (complete)
-        output = rsa_enc_complete(ui->input_textedit->toPlainText().toStdString(),
+      case 1: //RSA (completely)
+        output = rsa_enc_completely(ui->input_textedit->toPlainText().toStdString(),
                          ui->e_textedit->toPlainText().toStdString(),
                          ui->n_textedit->toPlainText().toStdString());
         ui->output_textedit->setText(QString::fromStdString(output));
@@ -47,8 +47,8 @@ void MainWindow::on_start_button_clicked()
                          ui->n_textedit->toPlainText().toStdString());
         ui->output_textedit->setText(QString::fromStdString(output));
         break;
-      case 1: //RSA (complete)
-        output = rsa_dec_complete(ui->input_textedit->toPlainText().toStdString(),
+      case 1: //RSA (completely)
+        output = rsa_dec_completely(ui->input_textedit->toPlainText().toStdString(),
                          ui->d_textedit->toPlainText().toStdString(),
                          ui->n_textedit->toPlainText().toStdString());
         ui->output_textedit->setText(QString::fromStdString(output));
@@ -77,8 +77,6 @@ void MainWindow::on_generate_button_clicked()
   ui->d_textedit->setText(QString::fromStdString(d.get_str()));
 }
 
-//TODO: maybe automatically clean the textedits when changing from enc to dec
-//TODO: maybe set text from output to input when changing
 void MainWindow::on_selectEnc_comboBox_currentTextChanged(const QString &text)
 {
   if(text == "Encrypt"){

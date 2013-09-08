@@ -13,5 +13,5 @@ bool fermat_test(mpz_class prime, mpz_class rounds);
 void genrsa(mpz_class block_size, mpz_class &q, mpz_class &p, mpz_class &N, mpz_class &e, mpz_class &d);
 string rsa_enc(string plainText, string eStr, string NStr);
 string rsa_dec(string encrypted, string dStr, string NStr);
-string rsa_enc_complete(string plainText, string eStr, string NStr);
-string rsa_dec_complete(string encrypted, string dStr, string NStr);
+string rsa_enc_completely(string plainText, string eStr, string NStr);
+string rsa_dec_completely(string encrypted, string dStr, string NStr);
