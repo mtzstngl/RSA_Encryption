@@ -1,10 +1,11 @@
-#include <iostream>
+#include <iostream> //TODO: replace me with #include<string>
 #include <chrono>
 #include <algorithm>
 #include <gmpxx.h>
 #include <gmp.h>
+#include "dataconv.h"
 
-using namespace std;
+using namespace std; //TODO: remove me
 
 mpz_class gcd(mpz_class a, mpz_class b);
 void extended_ea(mpz_class a, mpz_class &b, mpz_class &s, mpz_class &t);
