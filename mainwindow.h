@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <iostream>
 #include "rsa.h"
+#include "rsaes-oaep.h"
 
 namespace Ui {
     class MainWindow;

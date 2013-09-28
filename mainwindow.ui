@@ -184,11 +184,6 @@
                <string>RSAES-OAEP</string>
               </property>
              </item>
-             <item>
-              <property name="text">
-               <string>RSAES-PKCS1-V1_5</string>
-              </property>
-             </item>
             </widget>
            </item>
           </layout>

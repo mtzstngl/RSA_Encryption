@@ -30,10 +30,10 @@ void MainWindow::on_start_button_clicked()
         ui->output_textedit->setText(QString::fromStdString(output));
         break;
       case 2: //RSAES-OAEP
-        //TODO: implement me
-        break;
-      case 3: //RSAES-PKCS1-V1_5
-        //TODO: implement me
+        output = rsaes_oaep_enc(ui->e_textedit->toPlainText().toStdString(),
+                         ui->n_textedit->toPlainText().toStdString(),
+                         ui->input_textedit->toPlainText().toStdString(), "");
+        ui->output_textedit->setText(QString::fromStdString(output));
         break;
       default:
         ui->input_textedit->setText("You shouldn't be able to select this!!");
@@ -54,10 +54,10 @@ void MainWindow::on_start_button_clicked()
         ui->output_textedit->setText(QString::fromStdString(output));
         break;
       case 2: //RSAES-OAEP
-        //TODO: implement me
-        break;
-      case 3: //RSAES-PKCS1-V1_5
-        //TODO: implement me
+        output = rsaes_oaep_dec(ui->d_textedit->toPlainText().toStdString(),
+                         ui->n_textedit->toPlainText().toStdString(),
+                         ui->input_textedit->toPlainText().toStdString(), "");
+        ui->output_textedit->setText(QString::fromStdString(output));
         break;
       default:
         ui->input_textedit->setText("You shouldn't be able to select this!!");
