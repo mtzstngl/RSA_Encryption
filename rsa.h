@@ -1,3 +1,6 @@
+#ifndef RSA_H
+#define RSA_H
+
 #include <iostream> //TODO: replace me with #include<string>
 #include <chrono>
 #include <algorithm>
@@ -16,3 +19,5 @@ string rsa_enc(string plainText, string eStr, string NStr);
 string rsa_dec(string encrypted, string dStr, string NStr);
 string rsa_enc_completely(string plainText, string eStr, string NStr);
 string rsa_dec_completely(string encrypted, string dStr, string NStr);
+
+#endif //RSA_H
