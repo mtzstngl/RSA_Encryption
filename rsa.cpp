@@ -3,7 +3,7 @@
 string rsa_enc_completely(string plainText, string eStr, string NStr)
 {
   string encrypted, tmp;
-  int asciiNum;
+  //int asciiNum;
   mpz_class e, N, enc;
   mpz_class plain;
   
@@ -17,18 +17,8 @@ string rsa_enc_completely(string plainText, string eStr, string NStr)
   e.set_str(eStr, 10);
   N.set_str(NStr, 10);
   
-  for(char asciiChar : plainText){
-    asciiNum = asciiChar;
-    if(asciiNum < 10){
-      tmp += "00" + std::to_string(asciiNum);
-    }else if(asciiNum < 100){
-      tmp += "0" + std::to_string(asciiNum);
-    }else{
-      tmp += std::to_string(asciiNum);
-    }
-  }
+  plain = OS2IP(reinterpret_cast<uint8_t*>(const_cast<char*>(plainText.data())), plainText.size());
   
-  plain.set_str(tmp, 10);
   if(plain < N){
     mpz_powm(enc.get_mpz_t(), plain.get_mpz_t(), e.get_mpz_t(), N.get_mpz_t());
     encrypted = enc.get_str();
@@ -41,7 +31,6 @@ string rsa_enc_completely(string plainText, string eStr, string NStr)
 
 string rsa_dec_completely(string encrypted, string dStr, string NStr)
 {
-  string plainText, sub;
   mpz_class d, N, dec, enc;
 
   if( (!std::all_of(dStr.begin(), dStr.end(), ::isdigit)) || (dStr == "") ){
@@ -57,23 +46,12 @@ string rsa_dec_completely(string encrypted, string dStr, string NStr)
 
   enc.set_str(encrypted, 10);
   mpz_powm(dec.get_mpz_t(), enc.get_mpz_t(), d.get_mpz_t(), N.get_mpz_t());
-
-  encrypted = dec.get_str();
-
-  while(encrypted.length() > 0){
-    if(encrypted.length() >= 3){
-      sub = encrypted.substr(encrypted.length() - 3, encrypted.length());
-      encrypted.erase(encrypted.length() - 3, encrypted.length());
-    }else{
-      sub = encrypted.substr(encrypted.length() - encrypted.length(), encrypted.length());
-      encrypted.erase(encrypted.length() - encrypted.length(), encrypted.length());
-    }
-    plainText += static_cast<char>(std::stoi(sub));
-  }
   
-  std::reverse(plainText.begin(), plainText.end());
+  size_t k = mpz_sizeinbase(dec.get_mpz_t(), 256);
 
-  return plainText;
+  uint8_t *octetText = I2OSP(dec, k);
+  
+  return string(octetText, octetText + k);
 }
 
 string rsa_enc(string plainText, string eStr, string NStr)
@@ -154,7 +132,7 @@ void genrsa(mpz_class block_size, mpz_class &q, mpz_class &p, mpz_class &N, mpz_
   mpz_class m,s;
   gmp_randclass randClass(gmp_randinit_default);
 
-  block_size/2; //size of a prime
+  block_size /= 2; //size of a prime
 
   //generate p
   randClass.seed(mpz_class(chrono::high_resolution_clock::now().time_since_epoch().count()));
