@@ -45,7 +45,10 @@ flags = [
 '-I/home/matze/SpiderOak Hive/Projects/C++/RSA-Encryption',
 # gmplib for big numbers
 '-lgmp',
-'-lgmpxx'
+'-lgmpxx',
+# cryptopp for sha
+'-I/usr/include/cryptopp',
+'-lcryptopp'
 ]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the
