@@ -3,9 +3,12 @@
 void mgf(CryptoPP::SHA256 hash, uint8_t *mask, size_t maskLen, uint8_t *seed, uint8_t seedLen)
 {
   size_t hLen = CryptoPP::SHA256::DIGESTSIZE;
-  size_t maxCount = (maskLen / hLen) - 1;
   uint8_t mgfSeed[seedLen + 4];
   uint8_t digest[hLen];
+  size_t maxCount = (maskLen / hLen) - 1;
+  if(maskLen % hLen){
+    maxCount++;
+  }
 
   for(size_t i = 0; i <= maxCount; i++){
     uint8_t *C = I2OSP(i, 4);

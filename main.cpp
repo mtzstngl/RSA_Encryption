@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include <QApplication>
 
+#include <iostream>
+#include "mgf.h"
 using namespace std;
 
 int main(int argc, char *argv[])
