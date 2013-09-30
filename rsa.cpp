@@ -113,21 +113,6 @@ string rsa_dec(string encrypted, string dStr, string NStr)
 void genrsa(mpz_class block_size, mpz_class &q, mpz_class &p, mpz_class &N, mpz_class &e, mpz_class &d)
 {
   //generate numbers with desired length
-/*
- *  gmp_randclass randClass(gmp_randinit_default);
- *
- *  for(mpz_class i = 0; i < 1000000000; i+= 10000){
- *    randClass.seed(mpz_class(chrono::high_resolution_clock::now().time_since_epoch().count()));
- *    mpf_class f(0, 4096);
- *    f = randClass.get_f();
- *    f *= 10000000000 * i;
- *    f += 200000000000 * i;
- *    cout << f << endl;
- *    mpz_class integer;
- *    mpz_set_f(integer.get_mpz_t(), f.get_mpf_t());
- *    cout << integer << endl;
- *  }
- */
 
   mpz_class m,s;
   gmp_randclass randClass(gmp_randinit_default);
