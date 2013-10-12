@@ -69,6 +69,10 @@ string rsa_enc(string plainText, string eStr, string NStr)
 
   e.set_str(eStr, 10);
   N.set_str(NStr, 10);
+
+  if(N < 256){
+    return "N is too small";
+  }
   
   for(char asciiChar : plainText){
     asciiNum = asciiChar;
