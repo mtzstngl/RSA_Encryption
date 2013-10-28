@@ -17,12 +17,10 @@ string rsaes_oaep_enc(string eStr, string NStr, string M, string L)
   size_t mLen = M.size(); //length of M
   size_t k = mpz_sizeinbase(N.get_mpz_t(), 2); //length of RSA modulus N in octets
   if(k % 8){ //convert bit to octets
-    cout << "k before: " << k << endl;
     k = (k / 8) + 1;
   }else{
     k /= 8;
   }
-  cout << "k: " << k << endl;
 
   size_t hLen = CryptoPP::SHA256::DIGESTSIZE;
   uint8_t lHash[hLen];//hash output
@@ -129,7 +127,6 @@ string rsaes_oaep_dec(string dStr, string NStr,string CStr, string L)
   CryptoPP::SHA256 hash;
   size_t hLen = CryptoPP::SHA256::DIGESTSIZE;
   size_t k = mpz_sizeinbase(N.get_mpz_t(), 2); //length of RSA modulus N in octets
-  cout << "k before: " << k << endl;
   if(k % 8){ //convert bit to octets
     k = (k / 8) + 1;
   }else{
@@ -137,18 +134,15 @@ string rsaes_oaep_dec(string dStr, string NStr,string CStr, string L)
   }
 
   size_t Clen = mpz_sizeinbase(C.get_mpz_t(), 2); //length of C in octets
-  cout << "Clen before: " << Clen << endl;
   if(Clen % 8){ //convert bit to octets
     Clen = (Clen / 8) + 1;
   }else{
     Clen /= 8;
   }
-  cout << "Clen: " << Clen << endl;
 
   //1.b
-  if(Clen != k){
-    cout << "k: " << k << " " << "Clen: " << Clen << endl;
-    cout <<  "C has insufficient size" << endl;//TODO/FIXME this should be return instead of cout
+  if(Clen != k){ //FIXME: Clen sometimes has insufficient size
+    return "C has insufficient size";
   }
 
   //1.c k needs to be k >= 2*hLen + 2

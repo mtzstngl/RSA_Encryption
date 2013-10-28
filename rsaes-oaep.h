@@ -1,7 +1,7 @@
 #ifndef RSAES_OAEP_H
 #define RSAES_OAEP_H
 
-#include <iostream> //TODO: replace me with #include<string>
+#include <string>
 #include <algorithm>
 #include <chrono>
 #include <gmp.h>
@@ -12,7 +12,7 @@
 #include "dataconv.h"
 #include "mgf.h"
 
-using namespace std; //TODO: remove me
+using namespace std;
 
 string rsaes_oaep_enc(string eStr, string NStr, string M, string L);
 string rsaes_oaep_dec(string dStr, string NStr, string CStr, string L);
