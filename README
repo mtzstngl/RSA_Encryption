@@ -1,0 +1,5 @@
+This is a program I wrote for my seminar paper.
+
+This program uses cryptopp and gmplib to encrypt text with RSA and QT5 to provide a GUI.
+It implements the basic encryption with pure RSA and with RSAES-OAEP.
+

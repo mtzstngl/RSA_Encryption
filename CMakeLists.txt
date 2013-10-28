@@ -8,7 +8,7 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 # run cmake .. within ./build so there is no mess
 # build rsa encryption with large number support
 
-# START_FINDGMP copied from DGtal
+# START_FINDGMP
 if (GMP_INCLUDE_DIR AND GMP_LIBRARIES)
   # Already in cache, be silent
   set(GMP_FIND_QUIETLY TRUE)
@@ -23,7 +23,7 @@ include(FindPackageHandleStandardArgs)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(GMP DEFAULT_MSG GMP_INCLUDE_DIR GMP_LIBRARIES)
 
 mark_as_advanced(GMP_INCLUDE_DIR GMP_LIBRARIES)
-# END_FINDGMP copied from DGtal
+# END_FINDGMP
 
 # START FIND_CRYPTOPP
 if(CRYPTOPP_INCLUDE_DIR AND CRYPTOPP_LIBRARY)
