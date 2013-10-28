@@ -143,10 +143,12 @@ string rsaes_oaep_dec(string dStr, string NStr,string CStr, string L)
   }else{
     Clen /= 8;
   }
+  cout << "Clen: " << Clen << endl;
+
   //1.b
   if(Clen != k){
     cout << "k: " << k << " " << "Clen: " << Clen << endl;
-    return "C has insufficient size";
+    cout <<  "C has insufficient size" << endl;//TODO/FIXME this should be return instead of cout
   }
 
   //1.c k needs to be k >= 2*hLen + 2
@@ -161,7 +163,7 @@ string rsaes_oaep_dec(string dStr, string NStr,string CStr, string L)
   //2.b
   mpz_class m;
   mpz_powm(m.get_mpz_t(), C.get_mpz_t(), d.get_mpz_t(), N.get_mpz_t());
-
+  
   //2.c
   uint8_t *EM = I2OSP(m, k);
 
@@ -222,7 +224,7 @@ string rsaes_oaep_dec(string dStr, string NStr,string CStr, string L)
   }
 
   uint8_t M[tmpSize - hLen - index - 1];
-  std::copy(DB + hLen + index + 2, DB + tmpSize, M);
+  std::copy(DB + hLen + index + 1, DB + tmpSize, M);
 
   string output;
   for(size_t i = 0; i < (tmpSize - hLen - index - 1); i++){
