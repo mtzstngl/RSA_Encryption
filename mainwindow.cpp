@@ -43,22 +43,26 @@ void MainWindow::on_start_button_clicked()
         output = rsa_enc(ui->input_textedit->toPlainText().toStdString(),
                          ui->e_textedit->toPlainText().toStdString(),
                          ui->n_textedit->toPlainText().toStdString());
-        ui->output_textedit->setText(QString::fromStdString(output));
+        ui->output_textedit->clear();
+        ui->output_textedit->insertPlainText(QString::fromStdString(output));
         break;
       case 1: //RSA (completely)
         output = rsa_enc_completely(ui->input_textedit->toPlainText().toStdString(),
                          ui->e_textedit->toPlainText().toStdString(),
                          ui->n_textedit->toPlainText().toStdString());
-        ui->output_textedit->setText(QString::fromStdString(output));
+        ui->output_textedit->clear();
+        ui->output_textedit->insertPlainText(QString::fromStdString(output));
         break;
       case 2: //RSAES-OAEP
         output = rsaes_oaep_enc(ui->e_textedit->toPlainText().toStdString(),
                          ui->n_textedit->toPlainText().toStdString(),
                          ui->input_textedit->toPlainText().toStdString(), "");
-        ui->output_textedit->setText(QString::fromStdString(output));
+        ui->output_textedit->clear();
+        ui->output_textedit->insertPlainText(QString::fromStdString(output));
         break;
       default:
-        ui->input_textedit->setText("You shouldn't be able to select this!!");
+        ui->input_textedit->clear();
+        ui->input_textedit->insertPlainText("You shouldn't be able to select this!!");
         break;
     }
   }else{ //decrypt
@@ -67,22 +71,26 @@ void MainWindow::on_start_button_clicked()
         output = rsa_dec(ui->input_textedit->toPlainText().toStdString(),
                          ui->d_textedit->toPlainText().toStdString(),
                          ui->n_textedit->toPlainText().toStdString());
-        ui->output_textedit->setText(QString::fromStdString(output));
+        ui->output_textedit->clear();
+        ui->output_textedit->insertPlainText(QString::fromStdString(output));
         break;
       case 1: //RSA (completely)
         output = rsa_dec_completely(ui->input_textedit->toPlainText().toStdString(),
                          ui->d_textedit->toPlainText().toStdString(),
                          ui->n_textedit->toPlainText().toStdString());
-        ui->output_textedit->setText(QString::fromStdString(output));
+        ui->output_textedit->clear();
+        ui->output_textedit->insertPlainText(QString::fromStdString(output));
         break;
       case 2: //RSAES-OAEP
         output = rsaes_oaep_dec(ui->d_textedit->toPlainText().toStdString(),
                          ui->n_textedit->toPlainText().toStdString(),
                          ui->input_textedit->toPlainText().toStdString(), "");
-        ui->output_textedit->setText(QString::fromStdString(output));
+        ui->output_textedit->clear();
+        ui->output_textedit->insertPlainText(QString::fromStdString(output));
         break;
       default:
-        ui->input_textedit->setText("You shouldn't be able to select this!!");
+        ui->input_textedit->clear();
+        ui->input_textedit->insertPlainText("You shouldn't be able to select this!!");
         break;
     }
   }
@@ -92,11 +100,18 @@ void MainWindow::on_generate_button_clicked()
 {
   mpz_class q, p, N, e, d;
   genrsa(mpz_class(ui->selection_comboBox->currentText().toInt()), q, p, N, e, d);
-  ui->q_textedit->setText(QString::fromStdString(q.get_str()));
-  ui->p_textedit->setText(QString::fromStdString(p.get_str()));
-  ui->n_textedit->setText(QString::fromStdString(N.get_str()));
-  ui->e_textedit->setText(QString::fromStdString(e.get_str()));
-  ui->d_textedit->setText(QString::fromStdString(d.get_str()));
+  //clean all the things!
+  ui->q_textedit->clear();
+  ui->p_textedit->clear();
+  ui->n_textedit->clear();
+  ui->e_textedit->clear();
+  ui->d_textedit->clear();
+  //write all the things!
+  ui->q_textedit->insertPlainText(QString::fromStdString(q.get_str()));
+  ui->p_textedit->insertPlainText(QString::fromStdString(p.get_str()));
+  ui->n_textedit->insertPlainText(QString::fromStdString(N.get_str()));
+  ui->e_textedit->insertPlainText(QString::fromStdString(e.get_str()));
+  ui->d_textedit->insertPlainText(QString::fromStdString(d.get_str()));
 }
 
 void MainWindow::on_selectEnc_comboBox_currentTextChanged(const QString &text)
@@ -107,5 +122,15 @@ void MainWindow::on_selectEnc_comboBox_currentTextChanged(const QString &text)
   }else if(text == "Decrypt"){
     ui->input_label->setText(QString("Encrypted"));
     ui->output_label->setText(QString("Plain Text"));
+  }
+}
+
+void MainWindow::on_method_comboBox_currentIndexChanged(int index)
+{
+  if(index == 0){
+    ui->output_textedit->clear();
+    ui->output_textedit->insertPlainText(QString::fromStdString("Warning!! Umlauts not supported in this mode!"));
+  }else{
+    ui->output_textedit->clear();
   }
 }

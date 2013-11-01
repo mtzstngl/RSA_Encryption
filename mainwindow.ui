@@ -85,7 +85,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QTextEdit" name="q_textedit"/>
+            <widget class="QPlainTextEdit" name="q_textedit"/>
            </item>
           </layout>
          </item>
@@ -99,7 +99,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QTextEdit" name="p_textedit"/>
+            <widget class="QPlainTextEdit" name="p_textedit"/>
            </item>
           </layout>
          </item>
@@ -113,7 +113,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QTextEdit" name="n_textedit"/>
+            <widget class="QPlainTextEdit" name="n_textedit"/>
            </item>
           </layout>
          </item>
@@ -127,7 +127,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QTextEdit" name="e_textedit"/>
+            <widget class="QPlainTextEdit" name="e_textedit"/>
            </item>
           </layout>
          </item>
@@ -141,7 +141,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QTextEdit" name="d_textedit"/>
+            <widget class="QPlainTextEdit" name="d_textedit"/>
            </item>
           </layout>
          </item>
@@ -223,7 +223,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QTextEdit" name="input_textedit"/>
+            <widget class="QPlainTextEdit" name="input_textedit"/>
            </item>
           </layout>
          </item>
@@ -237,7 +237,11 @@
             </widget>
            </item>
            <item>
-            <widget class="QTextEdit" name="output_textedit"/>
+            <widget class="QPlainTextEdit" name="output_textedit">
+             <property name="plainText">
+              <string>Warning!! Umlauts not supported in this mode!</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
