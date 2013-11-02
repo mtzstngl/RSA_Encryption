@@ -124,13 +124,3 @@ void MainWindow::on_selectEnc_comboBox_currentTextChanged(const QString &text)
     ui->output_label->setText(QString("Plain Text"));
   }
 }
-
-void MainWindow::on_method_comboBox_currentIndexChanged(int index)
-{
-  if(index == 0){
-    ui->output_textedit->clear();
-    ui->output_textedit->insertPlainText(QString::fromStdString("Warning!! Umlauts not supported in this mode!"));
-  }else{
-    ui->output_textedit->clear();
-  }
-}

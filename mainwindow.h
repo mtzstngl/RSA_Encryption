@@ -44,7 +44,6 @@ private slots:
   void on_start_button_clicked();
   void on_generate_button_clicked();
   void on_selectEnc_comboBox_currentTextChanged(const QString &text);
-  void on_method_comboBox_currentIndexChanged(int index);
 
 private:
   Ui::MainWindow *ui;

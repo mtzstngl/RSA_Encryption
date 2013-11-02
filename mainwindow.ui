@@ -237,11 +237,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPlainTextEdit" name="output_textedit">
-             <property name="plainText">
-              <string>Warning!! Umlauts not supported in this mode!</string>
-             </property>
-            </widget>
+            <widget class="QPlainTextEdit" name="output_textedit"/>
            </item>
           </layout>
          </item>

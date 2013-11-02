@@ -25,7 +25,6 @@
 string rsa_enc_completely(string plainText, string eStr, string NStr)
 {
   string encrypted, tmp;
-  //int asciiNum;
   mpz_class e, N, enc;
   mpz_class plain;
   
@@ -79,7 +78,7 @@ string rsa_dec_completely(string encrypted, string dStr, string NStr)
 string rsa_enc(string plainText, string eStr, string NStr)
 {
   string encrypted;
-  int asciiNum;
+  mpz_class asciiNum;
   mpz_class e, N, enc;
   
   if( (!std::all_of(eStr.begin(), eStr.end(), ::isdigit)) || (eStr == "") ){
@@ -97,8 +96,9 @@ string rsa_enc(string plainText, string eStr, string NStr)
   }
   
   for(char asciiChar : plainText){
-    asciiNum = asciiChar;
-    mpz_powm(enc.get_mpz_t(), mpz_class(asciiNum).get_mpz_t(), e.get_mpz_t(), N.get_mpz_t());
+    uint8_t asciiUint = asciiChar;
+    asciiNum = OS2IP(&asciiUint, 1);
+    mpz_powm(enc.get_mpz_t(), asciiNum.get_mpz_t(), e.get_mpz_t(), N.get_mpz_t());
     encrypted += enc.get_str() + " ";
   }
 
