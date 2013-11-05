@@ -28,11 +28,14 @@
 #include <algorithm>
 #include <gmpxx.h>
 #include <gmp.h>
+#include <mpfr.h>
 #include "dataconv.h"
 
+#include <iostream>
 using namespace std;
 
 mpz_class gcd(mpz_class a, mpz_class b);
+mpz_class log2(mpz_class op);
 void extended_ea(mpz_class a, mpz_class &b, mpz_class &s, mpz_class &t);
 bool miller_rabin_test(mpz_class prime, mpz_class rounds);
 bool fermat_test(mpz_class prime, mpz_class rounds);

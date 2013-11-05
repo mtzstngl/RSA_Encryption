@@ -48,7 +48,9 @@ flags = [
 '-lgmpxx',
 # cryptopp for sha
 '-I/usr/include/cryptopp',
-'-lcryptopp'
+'-lcryptopp',
+# mpfr for log2
+'-lmpfr'
 ]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the

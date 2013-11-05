@@ -33,16 +33,42 @@ endif(CRYPTOPP_INCLUDE_DIR AND CRYPTOPP_LIBRARY)
 
 find_path(CRYPTOPP_INCLUDE_DIR NAMES cryptopp/cryptlib.h)
 find_library(CRYPTOPP_LIBRARY NAMES cryptopp libcryptopp)
-find_library(PTHREAD_LIBRARY NAMES pthread libpthread)
+
+if(NOT PTHREAD_LIBRARY)
+  find_library(PTHREAD_LIBRARY NAMES pthread libpthread)
+  MESSAGE(STATUS "PTHREAD lib: " ${PTHREAD_LIBRARY})
+endif(NOT PTHREAD_LIBRARY)
+
 set(CRYPTOPP_INCLUDE_DIR ${CRYPTOPP_INCLUDE_DIR}/cryptopp) # temporary fix -> see if better way
 MESSAGE(STATUS "CRYTPOPP lib: " ${CRYPTOPP_LIBRARY})
-MESSAGE(STATUS "PTHREAD lib: " ${PTHREAD_LIBRARY})
 
 include(FindPackageHandleStandardArgs)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(CRYPTOPP DEFAULT_MSG CRYPTOPP_INCLUDE_DIR CRYPTOPP_LIBRARY PTHREAD_LIBRARY)
 
 mark_as_advanced(CRYPTOPP_INCLUDE_DIR CRYPTOPP_LIBRARY PTHREAD_LIBRARY)
 # END FIND_CRYPTOPP
+
+# START FIND_MPFR
+if(MPFR_INCLUDE_DIR AND MPFR_LIBRARY)
+  # already cached
+  set(MPFR_FIND_QUIETLY TRUE)
+endif(MPFR_INCLUDE_DIR AND MPFR_LIBRARY)
+
+find_path(MPFR_INCLUDE_DIR NAMES mpfr.h)
+find_library(MPFR_LIBRARY NAMES mpfr libmpfr)
+
+if(NOT GMP_LIBRARIES)
+  find_library(GMP_LIBRARIES NAMES gmp libgmp)
+  MESSAGE(STATUS "GMP libs: " ${GMP_LIBRARIES})
+endif(NOT GMP_LIBRARIES)
+
+MESSAGE(STATUS "MPFR lib: " ${MPFR_LIBRARY})
+
+include(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(MPFR DEFAULT_MSG MPFR_INCLUDE_DIR MPFR_LIBRARY)
+
+mark_as_advanced(MPFR_INCLUDE_DIR MPFR_LIBRARY)
+# END FIND_MPFR
 
 # START_QTGUI
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -56,7 +82,7 @@ add_executable (rsa main.cpp rsa.cpp rsa.h mainwindow.cpp mainwindow.h dataconv.
 qt5_use_modules(rsa Widgets)
 
 # In case I need more libraries
-set (all_libs ${GMP_LIBRARIES} ${GMPXX_LIBRARIES} ${CRYPTOPP_LIBRARY})
+set (all_libs ${GMP_LIBRARIES} ${GMPXX_LIBRARIES} ${CRYPTOPP_LIBRARY} ${MPFR_LIBRARY})
 
-include_directories (${GMP_INCLDUE_DIR} ${CRYPTOPP_INCLUDE_DIR})
+include_directories (${GMP_INCLDUE_DIR} ${CRYPTOPP_INCLUDE_DIR} ${MPFR_INCLUDE_DIR})
 target_link_libraries (rsa ${all_libs})

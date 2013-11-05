@@ -249,6 +249,21 @@ void extended_ea(mpz_class a, mpz_class &b, mpz_class &s, mpz_class &t)
   }
 }
 
+mpz_class log2(mpz_class op)
+{
+  mpfr_t tmpMpfr;
+  mpf_class tMpf;
+
+  mpfr_init2(tmpMpfr, 10);
+  mpfr_set_z(tmpMpfr, op.get_mpz_t(), MPFR_RNDZ);
+  mpfr_log2(tmpMpfr, tmpMpfr, MPFR_RNDZ);
+
+  mpfr_get_f(tMpf.get_mpf_t(), tmpMpfr, MPFR_RNDZ);
+  mpz_set_f(op.get_mpz_t(), tMpf.get_mpf_t());
+
+  return op;
+}
+
 bool miller_rabin_test(mpz_class prime, mpz_class rounds)
 {
   mpz_class a, d, s = 1;
@@ -264,11 +279,12 @@ bool miller_rabin_test(mpz_class prime, mpz_class rounds)
   }
   
   //calculate s
-  while( ((prime - 1) % s) == 0){
-    i++;
+  i = log2(prime);
+  do{
     mpz_pow_ui(s.get_mpz_t(), mpz_class(2).get_mpz_t(), i.get_ui());
-  }
-  s = i - 1;
+    i--;
+  }while( ((prime - 1) % s) != 0);
+  s = i + 1;
   
   //calculate d
   mpz_pow_ui(d.get_mpz_t(), mpz_class(2).get_mpz_t(), s.get_ui());
