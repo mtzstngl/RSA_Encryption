@@ -149,16 +149,16 @@ void genrsa(mpz_class block_size, mpz_class &q, mpz_class &p, mpz_class &N, mpz_
   randClass.seed(mpz_class(chrono::high_resolution_clock::now().time_since_epoch().count()));
   p = randClass.get_z_bits(block_size);
 
-  if( (!fermat_test(p, 200)) || (!miller_rabin_test(p, 200)) ){
-    while( (!fermat_test(p, 200)) || (!miller_rabin_test(p, 200)) ){
+  if( (!fermat_test(p, 100)) || (!miller_rabin_test(p, 100)) ){
+    while( (!fermat_test(p, 100)) || (!miller_rabin_test(p, 100)) ){
       p++;
     }
   }
 
   //generate q
   q = randClass.get_z_bits(block_size);
-  if( ((!fermat_test(q, 200)) || (!miller_rabin_test(q, 200))) /*|| (q == p) */){
-    while( ((!fermat_test(q, 200)) || (!miller_rabin_test(q, 200))) /*|| (q == p)*/ ){
+  if( ((!fermat_test(q, 100)) || (!miller_rabin_test(q, 100))) /*|| (q == p) */){
+    while( ((!fermat_test(q, 100)) || (!miller_rabin_test(q, 100))) /*|| (q == p)*/ ){
       q++;
     }
   }
@@ -344,7 +344,7 @@ bool fermat_test(mpz_class prime, mpz_class rounds)
     // a is only allowed from 1 to n but rand.get_z_range outputs numbers from 0 to n-1
     do{
       a = rand.get_z_range(prime);
-      //check if this a was already used
+      //check if a is too small
     }while(a < 1);
 
     mpz_powm(result.get_mpz_t(), a.get_mpz_t(), exp.get_mpz_t(), prime.get_mpz_t());
