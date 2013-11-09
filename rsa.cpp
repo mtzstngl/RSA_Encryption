@@ -299,7 +299,6 @@ bool miller_rabin_test(mpz_class prime, mpz_class rounds)
     // a is only allowed from 2 to n-1 but rand.get_z_range outputs numbers from 0 to n-1
     do{
       a = rand.get_z_range(prime);
-      //check if this a was already used
     }while(a < 2);
     //test if a^d % prime == 1
     mpz_powm(result.get_mpz_t(), a.get_mpz_t(), d.get_mpz_t(), prime.get_mpz_t());
