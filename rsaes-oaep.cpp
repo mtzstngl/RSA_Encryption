@@ -162,9 +162,9 @@ string rsaes_oaep_dec(string dStr, string NStr,string CStr, string L)
     Clen /= 8;
   }
 
-  //1.b
-  if(Clen != k){ //FIXME: Clen sometimes has insufficient size
-    return "C has insufficient size";
+  //1.b //Cypher has to be less or equal than modulus
+  if(Clen > k){
+    return "C is too big";
   }
 
   //1.c k needs to be k >= 2*hLen + 2
